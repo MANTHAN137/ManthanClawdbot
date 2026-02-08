@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ClawdBot, MessageContext } from '../core/bot.js';
 import { Logger } from '../utils/logger.js';
+import { setQR, setConnected } from '../core/state.js';
 
 export class WhatsAppInterface {
     private bot: ClawdBot;
@@ -37,25 +38,37 @@ export class WhatsAppInterface {
         this.setupEventHandlers();
     }
 
+
+
     private setupEventHandlers(): void {
         this.client.on('qr', (qr) => {
             this.logger.info('Scan this QR code with WhatsApp:');
             console.log('');
             qrcode.generate(qr, { small: true });
             console.log('');
+
+            // Update shared state for web view
+            setQR(qr);
+            setConnected(false);
         });
 
         this.client.on('ready', () => {
             this.isReady = true;
             this.logger.success('WhatsApp connected and ready!');
+
+            // Clear QR and set connected
+            setQR(null);
+            setConnected(true);
         });
 
         this.client.on('authenticated', () => {
             this.logger.success('WhatsApp authenticated');
+            setConnected(true);
         });
 
         this.client.on('auth_failure', (msg) => {
             this.logger.error('WhatsApp authentication failed:', msg);
+            setConnected(false);
         });
 
         this.client.on('disconnected', (reason) => {
