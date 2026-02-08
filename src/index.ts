@@ -3,11 +3,15 @@ import { ClawdBot } from './core/bot.js';
 import { TerminalInterface } from './interfaces/terminal.js';
 import { WhatsAppInterface } from './interfaces/whatsapp.js';
 import { Logger } from './utils/logger.js';
+import { startKeepAlive } from './core/keep-alive.js'; // Import keep-alive
 
 const logger = new Logger('Main');
 
 async function main() {
     logger.info('🤖 Starting Clawdbot...');
+
+    // Start Keep-Alive Server (for Render)
+    startKeepAlive();
 
     try {
         // Initialize the main bot
