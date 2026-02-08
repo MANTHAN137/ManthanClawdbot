@@ -19,6 +19,13 @@ export class TerminalInterface {
     async start(): Promise<void> {
         this.logger.info('Starting terminal interface...');
 
+        // In non-interactive environments (like Docker/Render), don't start readline
+        // unless explicitly needed, or handle close gracefully.
+        if (!process.stdin.isTTY) {
+            this.logger.info('Non-interactive environment detected. Terminal input disabled.');
+            return;
+        }
+
         this.rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
@@ -33,8 +40,10 @@ export class TerminalInterface {
         });
 
         this.rl.on('close', () => {
-            console.log('\n' + chalk.yellow('Goodbye! 👋'));
-            process.exit(0);
+            // Do NOT exit process here automatically.
+            // Only log that terminal input is closed.
+            // The process should stay alive for WhatsApp/other services.
+            console.log('\n' + chalk.yellow('Terminal input closed.'));
         });
     }
 
