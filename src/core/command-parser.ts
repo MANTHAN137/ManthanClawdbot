@@ -27,10 +27,19 @@ export class CommandParser {
             'system_open_app',
             'system_info',
             'screenshot',
-            // Web Search
+            // Web Search (ALL types)
             'web_search',
+            'smart_search',
             'youtube_search',
             'amazon_search',
+            'sports_search',
+            'news_search',
+            'person_search',
+            'music_search',
+            'movie_search',
+            'location_search',
+            'game_search',
+            'image_search',
             // Productivity
             'add_note',
             'get_notes',

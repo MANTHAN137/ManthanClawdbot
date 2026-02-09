@@ -177,11 +177,38 @@ export class TaskExecutor {
                 case 'web_search':
                     return await this.websearch.search(command.params.query as string);
 
+                case 'smart_search':
+                    return await this.websearch.smartSearch(command.params.query as string);
+
                 case 'youtube_search':
                     return await this.websearch.searchYouTube(command.params.query as string);
 
                 case 'amazon_search':
                     return await this.websearch.searchAmazon(command.params.query as string);
+
+                case 'sports_search':
+                    return await this.websearch.searchSports(command.params.query as string);
+
+                case 'news_search':
+                    return await this.websearch.searchNews(command.params.query as string);
+
+                case 'person_search':
+                    return await this.websearch.searchPerson(command.params.query as string);
+
+                case 'music_search':
+                    return await this.websearch.searchMusic(command.params.query as string);
+
+                case 'movie_search':
+                    return await this.websearch.searchMovie(command.params.query as string);
+
+                case 'location_search':
+                    return await this.websearch.searchLocation(command.params.query as string);
+
+                case 'game_search':
+                    return await this.websearch.searchGame(command.params.query as string);
+
+                case 'image_search':
+                    return await this.websearch.searchImages(command.params.query as string);
 
                 // Help
                 case 'help':

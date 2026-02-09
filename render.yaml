@@ -3,14 +3,16 @@ services:
     name: clawdbot
     env: docker
     plan: free
-    buildCommand: docker build -t clawdbot .
-    startCommand: docker run clawdbot
+    healthCheckPath: /health
     envVars:
       - key: GEMINI_API_KEY
         sync: false
       - key: WHATSAPP_ENABLED
-        value: true
-      - key: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
-        value: true
-      - key: PUPPETEER_EXECUTABLE_PATH
-        value: /usr/bin/google-chrome-stable
+        value: "true"
+      - key: NODE_ENV
+        value: production
+      - key: RENDER_EXTERNAL_URL
+        fromService:
+          type: web
+          name: clawdbot
+          property: host
